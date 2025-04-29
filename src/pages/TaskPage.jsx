@@ -17,6 +17,9 @@ function TaskPage() {
   }, [taskId]);
 
   const deleteTask = () => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this task?");
+    if (!confirmDelete) return;
+
     axios.delete(`${url}/tasks/${taskId}`)
       .then(() => navigate("/tasks"))
       .catch(error => console.error("Error deleting task:", error));
