@@ -4,9 +4,9 @@ import { NavLink } from 'react-router-dom'
 function NavBar() {
   return (
     <nav>
-        <NavLink to={`/tasks`}>All Tasks</NavLink>
-        <NavLink to={`/create-user`}>Create User</NavLink>
-        <NavLink to={`/about`}>About</NavLink>
+      <NavLink to={`/tasks`}>All Tasks</NavLink>
+      <NavLink to={`/tasks/new`}>Create Task</NavLink>
+      <NavLink to={`/about`}>About</NavLink>
     </nav>
   )
 }
