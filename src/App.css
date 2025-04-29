@@ -71,7 +71,12 @@ main{
   align-items: center;
 }
 
-.users{
-  display: flex;
-  flex-direction: column;
+
+.tasks ul {
+  list-style: none;
+  padding: 0;
+}
+
+.tasks li {
+  margin: 10px 0;
 }

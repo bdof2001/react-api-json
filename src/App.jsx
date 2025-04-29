@@ -5,7 +5,7 @@ import CreateUserPage from './pages/CreateUserPage'
 import EditUserPage from './pages/EditUserPage'
 import HomePage from './pages/HomePage'
 import UserPage from './pages/UserPage'
-import UsersPage from './pages/UsersPage'
+import TasksPage from './pages/TasksPage'
 import NavBar from './components/NavBar'
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/users" element={<UsersPage />} />
+          <Route path="/tasks" element={<TasksPage />} />
           <Route path="/users/:userId" element={<UserPage />} />
           <Route path="/create-user" element={<CreateUserPage />} />
           <Route path="/edit-user/:userId" element={<EditUserPage />} />
