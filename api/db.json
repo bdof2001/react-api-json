@@ -1,0 +1,31 @@
+{
+    "tasks": [
+        {
+            "id": 1,
+            "title": "Study React",
+            "description": "Review useState and useEffect hooks",
+            "priority": "high",
+            "done": false,
+            "subtasks": [
+                {
+                    "id": 1,
+                    "title": "Review useState",
+                    "done": false
+                },
+                {
+                    "id": 2,
+                    "title": "Practice useEffect",
+                    "done": false
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "title": "Finish project",
+            "description": "Complete the final touches and README",
+            "priority": "medium",
+            "done": false,
+            "subtasks": []
+        }
+    ]
+}
