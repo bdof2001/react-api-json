@@ -25,6 +25,25 @@ function TaskPage() {
       .catch(error => console.error("Error deleting task:", error));
   };
 
+  const toggleSubtask = (index) => {
+    const updatedSubtasks = [...task.subtasks];
+    updatedSubtasks[index].done = !updatedSubtasks[index].done;
+
+    axios.patch(`${url}/tasks/${taskId}`, {
+      subtasks: updatedSubtasks
+    })
+      .then(() => {
+        setTask(prev => ({
+          ...prev,
+          subtasks: updatedSubtasks
+        }));
+      })
+      .catch(error => {
+        console.error("Error updating subtask:", error);
+      });
+  };
+
+
   return (
     <div>
       <h2>Task Details (ID: {taskId})</h2>
@@ -37,12 +56,12 @@ function TaskPage() {
         <div>
           <h4>Subtasks</h4>
           <ul>
-            {task.subtasks.map(subtask => (
+            {task.subtasks.map((subtask, index) => (
               <li key={subtask.id}>
                 <input
                   type="checkbox"
                   checked={subtask.done}
-                  readOnly
+                  onChange={() => toggleSubtask(index)}
                 />
                 {subtask.title}
               </li>
@@ -50,6 +69,7 @@ function TaskPage() {
           </ul>
         </div>
       )}
+
 
 
       <button onClick={deleteTask}>Delete</button>
