@@ -33,6 +33,25 @@ function TaskPage() {
       <p><strong>Priority:</strong> {task.priority}</p>
       <p><strong>Status:</strong> {task.done ? "Done" : "Not Done"}</p>
 
+      {task.subtasks && task.subtasks.length > 0 && (
+        <div>
+          <h4>Subtasks</h4>
+          <ul>
+            {task.subtasks.map(subtask => (
+              <li key={subtask.id}>
+                <input
+                  type="checkbox"
+                  checked={subtask.done}
+                  readOnly
+                />
+                {subtask.title}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+
       <button onClick={deleteTask}>Delete</button>
       <br />
       <Link to={`/tasks/${taskId}/edit`}>Edit</Link> | <Link to="/tasks">Back</Link>

@@ -8,7 +8,7 @@ function Task({ task }) {
   const [isDone, setIsDone] = useState(task.done);
 
   useEffect(() => {
-    setIsDone(task.done); 
+    setIsDone(task.done);
   }, [task.done]);
 
   const allSubtasksDone =
@@ -45,7 +45,7 @@ function Task({ task }) {
       <Link to={`/tasks/${task.id}`}>
         {task.title}
       </Link>
-      {isDone && <span> ✅</span>}
+      {isDone}
     </li>
   );
 }
