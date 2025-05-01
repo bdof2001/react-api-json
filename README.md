@@ -43,19 +43,27 @@ src/
 
 ## ⚙️ Installation
 
-# 1. Clone the repository
+### 1. Clone the repository
+```bash
 git clone https://github.com/bdof2001/react-api-json
 cd react-api-json
+```
 
-# 2. Install dependencies
+### 2. Install dependencies
+```bash
 npm install
+```
 
-# 3. Start the json-server API (port 3001)
+### 3. Start the json-server API (port 3001)
+```bash
 npx json-server --watch api/db.json --port 3001
+```
 
 In a new terminal tab:
-# 4. Start the React application (port 5173 or 3000)
+### 4. Start the React application (port 5173 or 3000)
+```bash
 npm run dev
+```
 
 
 ## 🌐 Endpoints (JSON API)
