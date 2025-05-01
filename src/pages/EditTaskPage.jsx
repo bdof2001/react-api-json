@@ -36,10 +36,10 @@ function EditTaskPage() {
   };
 
   return (
-    <div>
+    <div className="create-task">
       <h2>Edit Task</h2>
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className="form-group">
           <label>Title:</label>
           <input
             type="text"
@@ -49,7 +49,7 @@ function EditTaskPage() {
           />
         </div>
 
-        <div>
+        <div className="form-group">
           <label>Description:</label>
           <input
             type="text"
@@ -58,7 +58,7 @@ function EditTaskPage() {
           />
         </div>
 
-        <div>
+        <div className="form-group">
           <label>Priority:</label>
           <select
             value={priority}
@@ -70,7 +70,7 @@ function EditTaskPage() {
           </select>
         </div>
 
-        <button type="submit">Save Changes</button>
+        <button type="submit" className="btn btn-add">Save Changes</button>
       </form>
     </div>
   );

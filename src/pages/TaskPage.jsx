@@ -79,16 +79,28 @@ function TaskPage() {
   if (!task) return <p>Loading...</p>;
 
   return (
-    <div>
-      <h2>Task Details (ID: {taskId})</h2>
-      <p><strong>Title:</strong> {task.title}</p>
-      <p><strong>Description:</strong> {task.description}</p>
-      <p><strong>Priority:</strong> {task.priority}</p>
-      <p><strong>Status:</strong> {task.done ? "Done" : "Not Done"}</p>
+    <div className="task-details">
+      <div className="task-header">
+        <h2>Task Details (ID: {taskId})</h2>
+        <div className="task-info">
+          <p><strong>Title:</strong> {task.title}</p>
+          <p><strong>Description:</strong> {task.description}</p>
+          <p><strong>Priority:</strong> {task.priority}</p>
+          <p><strong>Status:</strong> {task.done ? "Done" : "Not Done"}</p>
+        </div>
 
-      <button onClick={deleteTask}>Delete</button>
-      <br />
-      <Link to={`/tasks/${taskId}/edit`}>Edit</Link> | <Link to="/tasks">Back</Link>
+        <div className="task-actions-row">
+          <button className="btn btn-delete" onClick={deleteTask}>Delete</button>
+          <Link to={`/tasks/${taskId}/edit`}>
+            <button className="btn btn-edit">Edit</button>
+          </Link>
+        </div>
+
+        <div className="task-links task-back-link">
+          <Link to="/tasks">Back</Link>
+        </div>
+      </div>
+
 
       {task.subtasks && (
         <div>
@@ -96,28 +108,30 @@ function TaskPage() {
           <ul>
             {task.subtasks.map((sub, index) => (
               <li key={sub.id}>
-                <input
-                  type="checkbox"
-                  checked={sub.done}
-                  onChange={() => toggleSubtask(index)}
-                />
-                {sub.title}
-                <button onClick={() => deleteSubtask(index)} style={{ marginLeft: '10px' }}>
-                  Delete
-                </button>
+                <div className="subtask-left">
+                  <input
+                    type="checkbox"
+                    checked={sub.done}
+                    onChange={() => toggleSubtask(index)}
+                  />
+                  {sub.title}
+                </div>
+                <button className="btn-delete" onClick={() => deleteSubtask(index)}>Delete</button>
               </li>
             ))}
           </ul>
 
-
           <h4>Add Subtask</h4>
-          <input
-            type="text"
-            placeholder="Subtask title"
-            value={newSubtaskTitle}
-            onChange={(e) => setNewSubtaskTitle(e.target.value)}
-          />
-          <button onClick={addSubtask}>Add</button>
+          <div className="add-subtask">
+            <input
+              type="text"
+              placeholder="Subtask title"
+              value={newSubtaskTitle}
+              onChange={(e) => setNewSubtaskTitle(e.target.value)}
+            />
+            <button className="btn-add" onClick={addSubtask}>Add</button>
+
+          </div>
         </div>
       )}
     </div>

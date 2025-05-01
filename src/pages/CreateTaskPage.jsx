@@ -29,11 +29,11 @@ function CreateTaskPage() {
   };
 
   return (
-    <div>
+    <div className="create-task">
       <h2>Create New Task</h2>
 
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className="form-group">
           <label htmlFor="title">Title:</label>
           <input
             type="text"
@@ -44,7 +44,7 @@ function CreateTaskPage() {
           />
         </div>
 
-        <div>
+        <div className="form-group">
           <label htmlFor="description">Description:</label>
           <input
             type="text"
@@ -54,7 +54,7 @@ function CreateTaskPage() {
           />
         </div>
 
-        <div>
+        <div className="form-group">
           <label htmlFor="priority">Priority:</label>
           <select
             name="priority"
@@ -67,7 +67,7 @@ function CreateTaskPage() {
           </select>
         </div>
 
-        <button type="submit">Create Task</button>
+        <button type="submit" className="btn btn-add">Create Task</button>
       </form>
     </div>
   );

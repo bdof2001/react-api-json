@@ -34,23 +34,26 @@ function Task({ task }) {
 
   return (
     <li>
-      <input
-        type="checkbox"
-        checked={isDone}
-        onChange={toggleDone}
-        disabled={!allSubtasksDone}
-        title={allSubtasksDone ? "Mark task as done" : "Complete all subtasks first"}
-      />
-      <Link to={`/tasks/${task.id}`}>
-        {task.title}
-      </Link>
-      {total > 0 && (
-        <span className="subtask-counter">
-          ({doneCount}/{total} subtasks done)
-        </span>
-      )}
+      <div className="task-item">
+        <input
+          type="checkbox"
+          checked={isDone}
+          onChange={toggleDone}
+          disabled={!allSubtasksDone}
+          title={allSubtasksDone ? "Mark task as done" : "Complete all subtasks first"}
+        />
+        <div className="task-content">
+          <Link to={`/tasks/${task.id}`}>
+            {task.title}
+          </Link>
+          {total > 0 && (
+            <span className="subtask-counter">
+              ({doneCount}/{total} subtasks done)
+            </span>
+          )}
+        </div>
+      </div>
     </li>
   );
 }
-
 export default Task;
