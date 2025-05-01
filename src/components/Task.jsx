@@ -11,19 +11,22 @@ function Task({ task }) {
     setIsDone(task.done);
   }, [task.done]);
 
+  const total = task.subtasks?.length || 0;
+  const doneCount = task.subtasks?.filter(s => s.done).length || 0;
+
   const allSubtasksDone =
     !task.subtasks || task.subtasks.length === 0 ||
-    task.subtasks.every(sub => sub.done === true);
+    task.subtasks.every(sub => sub.done);
 
   const toggleDone = () => {
     if (!allSubtasksDone) return;
 
-    const newDoneStatus = !isDone;
+    const newDone = !isDone;
 
     axios.patch(`${url}/tasks/${task.id}`, {
-      done: newDoneStatus
+      done: newDone
     }).then(() => {
-      setIsDone(newDoneStatus);
+      setIsDone(newDone);
     }).catch(error => {
       console.error("Error updating task status:", error);
     });
@@ -36,16 +39,16 @@ function Task({ task }) {
         checked={isDone}
         onChange={toggleDone}
         disabled={!allSubtasksDone}
-        title={
-          allSubtasksDone
-            ? "Mark task as done"
-            : "Complete all subtasks first"
-        }
+        title={allSubtasksDone ? "Mark task as done" : "Complete all subtasks first"}
       />
       <Link to={`/tasks/${task.id}`}>
         {task.title}
       </Link>
-      {isDone}
+      {total > 0 && (
+        <span className="subtask-counter">
+          ({doneCount}/{total} subtasks done)
+        </span>
+      )}
     </li>
   );
 }

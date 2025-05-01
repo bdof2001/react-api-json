@@ -8,12 +8,13 @@ function TaskPage() {
   const { taskId } = useParams();
   const navigate = useNavigate();
 
-  const [task, setTask] = useState({});
+  const [task, setTask] = useState(null);
+  const [newSubtaskTitle, setNewSubtaskTitle] = useState('');
 
   useEffect(() => {
     axios.get(`${url}/tasks/${taskId}`)
-      .then(response => setTask(response.data))
-      .catch(error => console.error("Error fetching task:", error));
+      .then(res => setTask(res.data))
+      .catch(err => console.error("Error loading task:", err));
   }, [taskId]);
 
   const deleteTask = () => {
@@ -22,7 +23,7 @@ function TaskPage() {
 
     axios.delete(`${url}/tasks/${taskId}`)
       .then(() => navigate("/tasks"))
-      .catch(error => console.error("Error deleting task:", error));
+      .catch(err => console.error("Error deleting task:", err));
   };
 
   const toggleSubtask = (index) => {
@@ -31,18 +32,51 @@ function TaskPage() {
 
     axios.patch(`${url}/tasks/${taskId}`, {
       subtasks: updatedSubtasks
-    })
-      .then(() => {
-        setTask(prev => ({
-          ...prev,
-          subtasks: updatedSubtasks
-        }));
-      })
-      .catch(error => {
-        console.error("Error updating subtask:", error);
-      });
+    }).then(() => {
+      setTask(prev => ({
+        ...prev,
+        subtasks: updatedSubtasks
+      }));
+    }).catch(err => console.error("Error updating subtask:", err));
   };
 
+  const addSubtask = () => {
+    if (!newSubtaskTitle.trim()) return;
+
+    const newSubtask = {
+      id: Date.now(),
+      title: newSubtaskTitle.trim(),
+      done: false
+    };
+
+    const updatedSubtasks = [...(task.subtasks || []), newSubtask];
+
+    axios.patch(`${url}/tasks/${taskId}`, {
+      subtasks: updatedSubtasks
+    }).then(() => {
+      setTask(prev => ({
+        ...prev,
+        subtasks: updatedSubtasks
+      }));
+      setNewSubtaskTitle('');
+    }).catch(err => console.error("Error adding subtask:", err));
+  };
+
+  const deleteSubtask = (index) => {
+    const updatedSubtasks = [...task.subtasks];
+    updatedSubtasks.splice(index, 1); // remove a subtarefa
+
+    axios.patch(`${url}/tasks/${taskId}`, {
+      subtasks: updatedSubtasks
+    }).then(() => {
+      setTask(prev => ({
+        ...prev,
+        subtasks: updatedSubtasks
+      }));
+    }).catch(err => console.error("Error deleting subtask:", err));
+  };
+
+  if (!task) return <p>Loading...</p>;
 
   return (
     <div>
@@ -52,29 +86,40 @@ function TaskPage() {
       <p><strong>Priority:</strong> {task.priority}</p>
       <p><strong>Status:</strong> {task.done ? "Done" : "Not Done"}</p>
 
-      {task.subtasks && task.subtasks.length > 0 && (
-        <div>
-          <h4>Subtasks</h4>
-          <ul>
-            {task.subtasks.map((subtask, index) => (
-              <li key={subtask.id}>
-                <input
-                  type="checkbox"
-                  checked={subtask.done}
-                  onChange={() => toggleSubtask(index)}
-                />
-                {subtask.title}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-
-
       <button onClick={deleteTask}>Delete</button>
       <br />
       <Link to={`/tasks/${taskId}/edit`}>Edit</Link> | <Link to="/tasks">Back</Link>
+
+      {task.subtasks && (
+        <div>
+          <h3>Subtasks</h3>
+          <ul>
+            {task.subtasks.map((sub, index) => (
+              <li key={sub.id}>
+                <input
+                  type="checkbox"
+                  checked={sub.done}
+                  onChange={() => toggleSubtask(index)}
+                />
+                {sub.title}
+                <button onClick={() => deleteSubtask(index)} style={{ marginLeft: '10px' }}>
+                  Delete
+                </button>
+              </li>
+            ))}
+          </ul>
+
+
+          <h4>Add Subtask</h4>
+          <input
+            type="text"
+            placeholder="Subtask title"
+            value={newSubtaskTitle}
+            onChange={(e) => setNewSubtaskTitle(e.target.value)}
+          />
+          <button onClick={addSubtask}>Add</button>
+        </div>
+      )}
     </div>
   );
 }

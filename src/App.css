@@ -80,3 +80,9 @@ main{
 .tasks li {
   margin: 10px 0;
 }
+
+.subtask-counter {
+  margin-left: 8px;
+  font-size: 0.9em;
+  color: gray;
+}
